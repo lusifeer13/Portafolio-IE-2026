@@ -1,0 +1,19 @@
+# Script local para subir cambios (no es parte de la página)
+subir.bat
+
+# Archivos de Photoshop (pesados, la página no los usa)
+*.psd
+
+# Basura del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración local de Claude Code
+.claude/
+
+# Fotos e imágenes que la página no usa
+assets/IMG_*.jpg
+assets/WhatsApp Image*
+assets/grabado lucy.jpeg
+assets/imagen1.png
+assets/imagen2.png
