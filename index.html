@@ -46,7 +46,7 @@
                     </p>
                 </div>
                 <!-- Placeholder: reemplazar por <img src="assets/mi-foto.jpg" alt="Foto de Luciana Valdés"> -->
-                <div class="placeholder foto">Tu foto aquí</div>
+                <img src="assets/yop.jpeg" width="435" height="580" alt="Foto de Luciana Valdés">
             </div>
         </section>
 
@@ -164,28 +164,25 @@
 
                 <!-- Otro proyecto 1: cambia el href por el link a su página en la wiki -->
                 <article class="otro-proyecto">
-                    <a href="" target="_blank">
-                        <!-- Placeholder: reemplazar por <img src="assets/..." alt="..."> -->
-                        <div class="placeholder">Imagen del proyecto</div>
-                        <h3>Nombre del proyecto 1</h3>
+                    <a href="https://wiki.ead.pucv.cl/Proximidad_est%C3%A1tica_de_la_vertical_a_la_horizontal_y_traslado_asistido_de_la_perpendicular_conjunta_-_Luciana_Vald%C3%A9s" target="_blank">
+                        <img src="assets/cubo tipo.jpeg" alt="Fotografía del proyecto Proximidad estática">
+                        <h3>Proximidad estática</h3>
                     </a>
                 </article>
 
                 <!-- Otro proyecto 2: cambia el href por el link a su página en la wiki -->
                 <article class="otro-proyecto">
-                    <a href="" target="_blank">
-                        <!-- Placeholder: reemplazar por <img src="assets/..." alt="..."> -->
-                        <div class="placeholder">Imagen del proyecto</div>
-                        <h3>Nombre del proyecto 2</h3>
+                    <a href="https://wiki.ead.pucv.cl/Tensi%C3%B3n_y_bifurcaci%C3%B3n_de_la_superficie_esf%C3%A9rica_r%C3%ADgida_-_Luciana_Vald%C3%A9s" target="_blank">
+                        <img src="assets/manos.jpeg" alt="Fotografía del proyecto Tensión y bifurcación">
+                        <h3>Tensión y bifurcación</h3>
                     </a>
                 </article>
 
                 <!-- Otro proyecto 3: cambia el href por el link a su página en la wiki -->
                 <article class="otro-proyecto">
-                    <a href="" target="_blank">
-                        <!-- Placeholder: reemplazar por <img src="assets/..." alt="..."> -->
-                        <div class="placeholder">Imagen del proyecto</div>
-                        <h3>Nombre del proyecto 3</h3>
+                    <a href="https://wiki.ead.pucv.cl/Trayectoria_de_trifurcaci%C3%B3n_lum%C3%ADnica:_contenci%C3%B3n,_direcci%C3%B3n_y_reflejo_-_Luciana_Vald%C3%A9s" target="_blank">
+                        <img src="assets/travesia.jpeg" alt="Fotografía del proyecto Travesía lumínica">
+                        <h3>Travesía lumínica</h3>
                     </a>
                 </article>
 
@@ -198,6 +195,19 @@
         </section>
 
     </main>
+
+    <!-- Música de fondo: el audio no se ve; script.js lo hace sonar al primer clic en la página.
+         loop = vuelve a empezar al terminar -->
+    <audio id="musica" src="assets/heliosphan-fragmento.mp3" loop preload="auto"></audio>
+
+    <!-- Control fijo de la música: botón para pausar/reanudar y, al pasar el mouse, el volumen -->
+    <div id="control-musica" class="control-musica">
+        <!-- input type="range" = slider. Va de 0 (silencio) a 1 (máximo) en pasos de 0.05 -->
+        <input id="volumen-musica" class="volumen-musica" type="range" min="0" max="1" step="0.05"
+            value="0.4" aria-label="Volumen de la música">
+        <button id="boton-musica" class="boton-musica" type="button" aria-pressed="false"
+            aria-label="Reproducir música" title="Heliosphan - Aphex Twin">♪</button>
+    </div>
 
     <!-- JavaScript al final del body: así las tarjetas ya existen cuando el script las busca -->
     <script src="script.js"></script>

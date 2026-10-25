@@ -141,6 +141,8 @@ header h1 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5em;
+    max-width: 580px; /* Más angosta que la galería de cartas (760px): cada foto queda más chica que una carta */
+    margin: 0 auto; /* Centrada, igual que la galería de cartas */
 }
 
 .otro-proyecto a {
@@ -154,14 +156,21 @@ header h1 {
     transform: translateY(-6px); /* Se levanta un poco */
 }
 
-.otro-proyecto .placeholder {
-    aspect-ratio: 4 / 3;
-    transition: border-color 0.3s, background-color 0.3s;
+.otro-proyecto img {
+    display: block;
+    width: 100%;
+    /* Las 3 fotos tienen proporciones distintas: todas quedan en 3:4 (vertical) y cover recorta lo que sobra */
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    filter: grayscale(40%); /* Algo apagadas en reposo... */
+    transition: filter 0.3s, box-shadow 0.3s;
 }
 
-.otro-proyecto a:hover .placeholder {
-    border-color: #a588f4;
-    background-color: rgba(165, 136, 244, 0.1);
+.otro-proyecto a:hover img {
+    filter: grayscale(0%); /* ...y a todo color al pasar el mouse */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5), 0 0 0 3px #a588f4; /* Sombra + contorno morado */
 }
 
 .otro-proyecto h3 {
@@ -275,6 +284,68 @@ header h1 {
 }
 
 
+/* --- Control de música (fijo en la esquina inferior derecha) --- */
+.control-musica {
+    position: fixed; /* Queda en el mismo lugar de la pantalla aunque se haga scroll */
+    right: 24px;
+    bottom: 24px;
+    z-index: 10; /* Por encima de las cartas */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Slider de volumen: escondido (ancho 0 y transparente) hasta que el mouse entra al control */
+.volumen-musica {
+    width: 0;
+    opacity: 0;
+    margin: 0;
+    accent-color: #a588f4; /* Color del slider sin tener que dibujarlo a mano */
+    cursor: pointer;
+    transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+/* El hover va en el contenedor (botón + slider): así el slider no desaparece al moverse hacia él.
+   :has(:focus-visible) lo muestra también al llegar con la tecla Tab, pero no lo deja
+   "pegado" abierto después de usarlo con el mouse (eso pasaría con :focus-within) */
+.control-musica:hover .volumen-musica,
+.control-musica:has(:focus-visible) .volumen-musica {
+    width: 120px;
+    opacity: 1;
+}
+
+.boton-musica {
+    flex-shrink: 0; /* El botón nunca se achica cuando aparece el slider */
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 50%; /* Círculo */
+    background-color: #a588f4;
+    color: #000;
+    font-size: 1.5em;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    opacity: 0.6; /* Pausado: más apagado */
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+.boton-musica:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Sonando: color pleno y un "latido" suave que se repite */
+.boton-musica.sonando {
+    opacity: 1;
+    animation: latido 1.6s ease-in-out infinite;
+}
+
+@keyframes latido {
+    0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 0 rgba(165, 136, 244, 0.6); }
+    50%      { box-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 12px rgba(165, 136, 244, 0); }
+}
+
+
 /* --- Pantallas táctiles (sin mouse no hay hover): las cartas ya parten dadas vuelta --- */
 @media (hover: none) {
     .tarjeta a {
@@ -379,8 +450,9 @@ header h1 {
         max-width: 300px;
     }
 
+    /* Otros proyectos se mantiene en 3 columnas: así sigue siendo más chico que las cartas (que van en 2) */
     .otros-galeria {
-        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8em;
     }
 
     /* La galería pasa a 2 columnas: con 1 sola, cada carta 5:7 quedaría altísima */
