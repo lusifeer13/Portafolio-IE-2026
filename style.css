@@ -1,0 +1,395 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+/* --- Estilos Generales --- */
+html {
+    scroll-behavior: smooth; /* Los links del índice bajan suave en vez de saltar */
+}
+
+body {
+    font-family: sans-serif;
+    max-width: 1100px; /* En pantallas muy anchas el contenido no se estira de más */
+    margin: 0 auto; /* auto a los lados = centrado */
+    padding: 2em 70px;
+    background-color: #332e49;
+    color: #f0e3e3;
+}
+
+
+h1, h2 {
+    font-family: 'Space Mono';
+    color: #d30707;
+}
+
+h3{
+    font-family: 'Open Sans';
+    font-size: 1em;
+}
+
+p {
+    font-family: 'Open Sans';
+    line-height: 1.6;
+    text-align: justify;
+}
+
+
+/* --- Encabezado: título a la izquierda, índice a la derecha --- */
+header {
+    display: flex;
+    justify-content: space-between; /* Empuja los dos hijos a los extremos */
+    align-items: flex-start;
+    gap: 2em;
+    padding-bottom: 2em;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.autora {
+    display: block; /* El span es "inline": así baja a su propia línea */
+    margin-top: 0.4em;
+    font-family: 'Open Sans';
+    font-size: 0.35em;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: #f0e3e3;
+}
+
+.indice h2 {
+    margin: 0 0 0.5em;
+    font-size: 1em;
+}
+
+.indice ul {
+    list-style: none; /* Quita los puntos de la lista */
+    margin: 0;
+    padding: 0;
+}
+
+.indice a {
+    display: inline-block;
+    padding: 0.2em 0;
+    font-family: 'Space Mono';
+    color: #f0e3e3;
+    text-decoration: none;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.indice a:hover {
+    color: #a588f4;
+    transform: translateX(6px); /* Se corre un poco a la derecha */
+}
+
+
+/* --- Secciones --- */
+.seccion {
+    padding: 2em 0;
+    border-top: 1px solid rgba(240, 227, 227, 0.2); /* Línea suave que separa secciones */
+    scroll-margin-top: 1em; /* Deja aire arriba al llegar desde el índice */
+}
+
+/* Placeholder: recuadro punteado que marca dónde va una imagen */
+.placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed rgba(240, 227, 227, 0.5);
+    border-radius: 8px;
+    color: rgba(240, 227, 227, 0.7);
+    font-family: 'Space Mono';
+    text-align: center;
+}
+
+/* Sobre mí: texto | foto */
+.sobre-mi-contenido {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3em;
+    align-items: center;
+}
+
+.placeholder.foto {
+    aspect-ratio: 1 / 1; /* Cuadrada, como en el boceto */
+}
+
+/* Imagen escrita: dos columnas de texto */
+.dos-columnas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3em;
+}
+
+
+/* --- Galería de Proyectos --- */
+.galeria {
+    display: grid;
+    /* Define 3 columnas de igual tamaño: 6 cartas = 2 filas de 3 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5em; /* Espacio entre las tarjetas */
+    max-width: 760px; /* Así las cartas 5:7 no quedan gigantes */
+    margin: 0 auto; /* auto a los lados reparte el espacio sobrante: la galería queda centrada */
+}
+
+
+/* --- Otros proyectos --- */
+.otros-galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5em;
+}
+
+.otro-proyecto a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+
+.otro-proyecto a:hover {
+    transform: translateY(-6px); /* Se levanta un poco */
+}
+
+.otro-proyecto .placeholder {
+    aspect-ratio: 4 / 3;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.otro-proyecto a:hover .placeholder {
+    border-color: #a588f4;
+    background-color: rgba(165, 136, 244, 0.1);
+}
+
+.otro-proyecto h3 {
+    margin: 0.6em 0 0;
+}
+
+/* Botón a la wiki general (es un link con forma de botón) */
+.boton {
+    display: inline-block;
+    margin-top: 2em;
+    padding: 15px 45px;
+    border-radius: 50px;
+    background-color: #a588f4;
+    color: #000;
+    font-family: 'Space Mono';
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.boton:hover {
+    background-color: #000;
+    color: white;
+}
+
+/* --- Tarjetas Individuales (cartas que se dan vuelta) --- */
+.tarjeta {
+    /* "Distancia de la cámara": sin esto el giro se ve plano, no en 3D */
+    perspective: 800px;
+    /* OJO: aquí no puede ir overflow: hidden, porque aplana el efecto 3D */
+}
+
+.tarjeta a {
+    /* El ancla es la carta que gira, con sus dos caras adentro */
+    display: grid; /* Grid para apilar las dos caras en la misma celda */
+    width: 100%;
+    /* Misma proporción que "back card.png" (750 x 1050 px = 5:7): el alto se calcula solo a partir del ancho */
+    aspect-ratio: 5 / 7;
+    text-decoration: none;
+    color: inherit;
+    transform-style: preserve-3d; /* Los hijos (las caras) viven en el mismo espacio 3D */
+    transition: transform 0.6s ease-in-out;
+    /* OJO: aquí tampoco puede ir filter, porque también aplana el efecto 3D */
+}
+
+/* La clase "volteada" la pone y la quita script.js (al pasar el mouse, y 3s después de quitarlo).
+   CSS no puede "recordar" que el mouse pasó: por eso ese tiempo lo lleva JavaScript */
+.tarjeta.volteada a {
+    transform: rotateY(180deg);
+}
+
+/* Lo común a las dos caras */
+.cara {
+    grid-area: 1 / 1; /* Ambas caras en la fila 1, columna 1: una encima de la otra */
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden; /* Ahora sí: recorta la imagen dentro de cada cara */
+    backface-visibility: hidden; /* Cuando una cara queda de espaldas, no se ve */
+    -webkit-backface-visibility: hidden; /* Lo mismo para Safari */
+}
+
+/* Dorso: lo que se ve con la carta boca abajo (igual en todas, como un mazo real).
+   Está vacío en el HTML: se estira para llenar la celda, cuyo tamaño viene del aspect-ratio del ancla */
+.dorso {
+    /* Imagen del dorso. La ruta es relativa a style.css, no al HTML.
+       Va entre comillas porque el nombre del archivo tiene un espacio */
+    background-image: url("assets/back card.png");
+    background-size: cover; /* Llena toda la cara, recortando lo que sobre */
+    background-position: center;
+    border: 4px solid white;
+}
+
+/* Frente: parte girado, de espaldas, y queda de frente cuando el ancla gira otros 180° */
+.frente {
+    transform: rotateY(180deg);
+    position: relative; /* Punto de referencia para el título con position: absolute */
+}
+
+.tarjeta img {
+    /* La imagen ocupa la carta completa. Como también es 5:7, cover no recorta nada */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* Elimina espacios en blanco debajo de la imagen */
+}
+
+.tarjeta h3 {
+    /* El título "flota" sobre la imagen, pegado abajo */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 2em 0.6em 0.6em; /* Aire a los lados: los nombres largos ocupan dos líneas */
+    text-align: center;
+    color: white;
+    /* Degradado de transparente a negro: oscurece solo la parte baja para que el texto se lea */
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+/* "Tarea 1", "Encargo Final"...: etiqueta pequeña sobre el nombre */
+.tarjeta h3 .etiqueta {
+    display: block;
+    font-family: 'Space Mono';
+    font-size: 0.75em;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+
+/* --- Pantallas táctiles (sin mouse no hay hover): las cartas ya parten dadas vuelta --- */
+@media (hover: none) {
+    .tarjeta a {
+        transform: rotateY(180deg);
+    }
+}
+
+
+/* --- Página de tarea (tareas/tareaN.html) --- */
+.tarea {
+    display: grid;
+    /* Columna de texto angosta + columna ancha para el sketch */
+    grid-template-columns: 1fr 2fr;
+    gap: 3em;
+}
+
+.tarea .volver,
+.tarea h2 {
+    /* Ocupan las dos columnas completas (de la línea 1 a la última) */
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+.volver {
+    font-family: 'Space Mono';
+    color: #f0e3e3; /* Mismo color claro del texto, para que se lea sobre el fondo oscuro */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.volver:hover {
+    color: #a588f4;
+}
+
+.tarea-info p {
+    font-family: 'Open Sans';
+    line-height: 1.6;
+}
+
+.tarea-sketch iframe {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Mantiene el iframe cuadrado aunque cambie el ancho */
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4); /* Sombra más fuerte: sobre fondo oscuro la suave no se notaba */
+    background-color: white;
+}
+
+.tarea-sketch a {
+    display: inline-block;
+    margin-top: 0.5em;
+    font-family: 'Open Sans';
+    color: #a588f4; /* Morado del sitio: se lee sobre el fondo oscuro y se reconoce como link */
+}
+
+.tarea-sketch a:hover {
+    color: #f0e3e3;
+}
+
+/* Página de tarea en una sola columna (texto arriba, sketch abajo) */
+.tarea-ancha {
+    grid-template-columns: 1fr;
+}
+
+/* Sketch de tamaño fijo: usa el width y height del HTML en vez de 100% y cuadrado */
+.sketch-fijo {
+    overflow-x: auto; /* En pantallas angostas se desplaza de lado en vez de cortarse */
+}
+
+.sketch-fijo iframe {
+    width: 800px;
+    height: 842px;
+    aspect-ratio: auto;
+    display: block;
+}
+
+
+/* --- Media Query para pantallas pequeñas --- */
+@media (max-width: 900px) {
+    
+    /* Ajusta los márgenes del body para aprovechar el espacio */
+    body {
+        padding: 1em 20px;
+    }
+
+    /* El índice baja y queda debajo del título */
+    header {
+        flex-direction: column;
+    }
+
+    header h1 {
+        font-size: 2.2em;
+    }
+
+    /* Sobre mí e Imagen escrita pasan a una columna */
+    .sobre-mi-contenido,
+    .dos-columnas {
+        grid-template-columns: 1fr;
+    }
+
+    .placeholder.foto {
+        max-width: 300px;
+    }
+
+    .otros-galeria {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* La galería pasa a 2 columnas: con 1 sola, cada carta 5:7 quedaría altísima */
+    .galeria {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* La página de tarea también pasa a una columna: texto arriba, sketch abajo */
+    .tarea {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea 4 | Portafolio Luciana Valdés</title>
+    <!-- "../" sube una carpeta: estamos en /tareas, y style.css está en la raíz -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- Encabezado: el mismo título del index, para que se sienta parte del mismo sitio -->
+    <header>
+        <h1>
+            Portafolio
+            <span class="autora">Luciana Valdés</span>
+        </h1>
+
+        <!-- Mismo índice del inicio, pero con "../index.html" delante:
+             primero vuelve a la página principal y después baja a la sección -->
+        <nav class="indice">
+            <h2>Índice</h2>
+            <ul>
+                <li><a href="../index.html#sobre-mi">Sobre mí</a></li>
+                <li><a href="../index.html#imagen-escrita">Imagen escrita</a></li>
+                <li><a href="../index.html#proyectos">Proyectos</a></li>
+                <li><a href="../index.html#otros-proyectos">Otros proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- main = el contenido principal y único de esta página -->
+    <!-- "tarea-ancha": una sola columna, para que quepa el sketch de 800 px de ancho -->
+    <main class="tarea tarea-ancha">
+
+        <!-- Enlace de vuelta al inicio (también usa "../") -->
+        <a class="volver" href="../index.html">← Volver a proyectos</a>
+
+        <h2>Tarea 4 | Ataque giratorio fractalizado</h2>
+
+        <!-- Sección 1: texto sobre el encargo -->
+        <section class="tarea-info">
+            <h3>El encargo</h3>
+            <p>
+                Aquí va qué pedía la tarea: por ejemplo, "crear una composición con formas
+                primitivas usando un ciclo for".
+            </p>
+
+            <h3>Qué aprendí</h3>
+            <p>
+                Aquí va una reflexión corta: qué funciones de p5 usaste, qué te costó
+                y qué cambiarías.
+            </p>
+        </section>
+
+        <!-- Sección 2: el sketch embebido -->
+        <section class="tarea-sketch sketch-fijo">
+            <!--
+                iframe = una "ventana" que muestra otra página dentro de esta.
+                El src se obtiene en el editor de p5: Share → Embed (o Present / Full Screen).
+                title describe el contenido para lectores de pantalla.
+                width y height fijan el tamaño exacto (800 x 842) para que el sketch se vea completo.
+            -->
+            <iframe src="https://editor.p5js.org/luciana.valdes.r/full/FTZEyB4X0" width="800" height="842" title="Sketch de p5.js: Ataque giratorio fractalizado">
+            </iframe>
+
+            <!-- Enlace alternativo por si el iframe no carga -->
+            <a href="https://editor.p5js.org/luciana.valdes.r/full/FTZEyB4X0" target="_blank">
+                Abrir el sketch en una pestaña nueva ↗
+            </a>
+        </section>
+
+    </main>
+
+</body>
+
+</html>

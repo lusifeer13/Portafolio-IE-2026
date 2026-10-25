@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Luciana Valdés</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Encabezado: título a la izquierda, índice a la derecha -->
+    <header>
+        <h1>
+            Portafolio
+            <span class="autora">Luciana Valdés</span>
+        </h1>
+
+        <!-- nav = navegación. Cada link baja hasta la sección con ese id -->
+        <nav class="indice">
+            <h2>Índice</h2>
+            <ul>
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#imagen-escrita">Imagen escrita</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#otros-proyectos">Otros proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Sobre mí: texto a la izquierda, foto a la derecha -->
+        <section id="sobre-mi" class="seccion">
+            <h2>Sobre mí</h2>
+            <div class="sobre-mi-contenido">
+                <div class="texto">
+                    <p>
+                        Texto de ejemplo: aquí va una presentación breve. Quién eres, qué estudias
+                        y qué te interesa del diseño y la programación.
+                    </p>
+                    <p>
+                        Puedes agregar un segundo párrafo sobre tus técnicas favoritas, como el grabado,
+                        o lo que buscas explorar en este portafolio.
+                    </p>
+                </div>
+                <!-- Placeholder: reemplazar por <img src="assets/mi-foto.jpg" alt="Foto de Luciana Valdés"> -->
+                <div class="placeholder foto">Tu foto aquí</div>
+            </div>
+        </section>
+
+        <!-- Imagen escrita: descripción del ramo en dos columnas -->
+        <section id="imagen-escrita" class="seccion">
+            <h2>Imagen escrita</h2>
+            <div class="dos-columnas">
+                <p>
+                    Imagen escrita es una asignatura que se centra en la intersección entre diseño,
+                    la programación y arte generativo. Utilizando p5.js como herramienta principal, el curso explora los
+                    fundamentos de la programación creativa y su aplicación en el diseño visual interactivo.
+                </p>
+                <p>
+                    A través del creative coding se hace énfasis en el pensamiento computacional como herramienta de diseño,
+                    fomentando un enfoque innovador en la resolución de problemas visuales y la creación artística. La
+                    integración de herramientas de IA busca ampliar las posibilidades creativas y técnicas, sirviendo como
+                    complemento al proceso de diseño y programación.
+                </p>
+            </div>
+        </section>
+
+        <!-- Proyectos: las cartas de las tareas de p5.js -->
+        <section id="proyectos" class="seccion">
+            <h2>Proyectos</h2>
+
+            <!-- Contenedor galería de proyectos -->
+            <div class="galeria">
+                <!-- tarjeta proyecto 1 -->
+                <div class="tarjeta">
+                    <a href="tareas/tarea1.html">
+                        <!-- Dorso: lo que se ve al principio (carta boca abajo) -->
+                        <div class="cara dorso"></div>
+                        <!-- Frente: se revela al hacer hover -->
+                        <div class="cara frente">
+                            <img src="assets/front card t1.png" alt="Vista previa de velocity : design : comfort">
+                            <h3><span class="etiqueta">Tarea 1</span> velocity : design : comfort</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- tarjeta proyecto 2 -->
+                <div class="tarjeta">
+                    <a href="tareas/tarea2.html">
+                        <!-- Dorso: lo que se ve al principio (carta boca abajo) -->
+                        <div class="cara dorso"></div>
+                        <!-- Frente: se revela al hacer hover -->
+                        <div class="cara frente">
+                            <img src="assets/front card t2.png" alt="Vista previa de Ondas expansivas en el agua">
+                            <h3><span class="etiqueta">Tarea 2</span> Ondas expansivas en el agua</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- tarjeta proyecto 3 -->
+                <div class="tarjeta">
+                    <a href="tareas/tarea3.html">
+                        <!-- Dorso: lo que se ve al principio (carta boca abajo) -->
+                        <div class="cara dorso"></div>
+                        <!-- Frente: se revela al hacer hover -->
+                        <div class="cara frente">
+                            <img src="assets/front card t3.png" alt="Vista previa de Event horizon">
+                            <h3><span class="etiqueta">Tarea 3</span> Event horizon</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- tarjeta proyecto 4 -->
+                <div class="tarjeta">
+                    <a href="tareas/tarea4.html">
+                        <!-- Dorso: lo que se ve al principio (carta boca abajo) -->
+                        <div class="cara dorso"></div>
+                        <!-- Frente: se revela al hacer hover -->
+                        <div class="cara frente">
+                            <img src="assets/front card t4.png" alt="Vista previa de Ataque giratorio fractalizado">
+                            <h3><span class="etiqueta">Tarea 4</span> Ataque giratorio fractalizado</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- tarjeta proyecto 5 -->
+                <div class="tarjeta">
+                    <a href="tareas/tarea5.html">
+                        <!-- Dorso: lo que se ve al principio (carta boca abajo) -->
+                        <div class="cara dorso"></div>
+                        <!-- Frente: se revela al hacer hover -->
+                        <div class="cara frente">
+                            <img src="assets/front card t5.png" alt="Vista previa de Desvanecimiento estelar">
+                            <h3><span class="etiqueta">Tarea 5</span> Desvanecimiento estelar</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- tarjeta proyecto 6 -->
+                <div class="tarjeta">
+                    <a href="tareas/tarea6.html">
+                        <!-- Dorso: lo que se ve al principio (carta boca abajo) -->
+                        <div class="cara dorso"></div>
+                        <!-- Frente: se revela al hacer hover -->
+                        <div class="cara frente">
+                            <img src="assets/front card t6.png" alt="Vista previa de El jardín que florece">
+                            <h3><span class="etiqueta">Encargo Final</span> El jardín que florece</h3>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Otros proyectos: cada uno enlaza a su página en la wiki -->
+        <section id="otros-proyectos" class="seccion">
+            <h2>Otros proyectos</h2>
+
+            <div class="otros-galeria">
+
+                <!-- Otro proyecto 1: cambia el href por el link a su página en la wiki -->
+                <article class="otro-proyecto">
+                    <a href="" target="_blank">
+                        <!-- Placeholder: reemplazar por <img src="assets/..." alt="..."> -->
+                        <div class="placeholder">Imagen del proyecto</div>
+                        <h3>Nombre del proyecto 1</h3>
+                    </a>
+                </article>
+
+                <!-- Otro proyecto 2: cambia el href por el link a su página en la wiki -->
+                <article class="otro-proyecto">
+                    <a href="" target="_blank">
+                        <!-- Placeholder: reemplazar por <img src="assets/..." alt="..."> -->
+                        <div class="placeholder">Imagen del proyecto</div>
+                        <h3>Nombre del proyecto 2</h3>
+                    </a>
+                </article>
+
+                <!-- Otro proyecto 3: cambia el href por el link a su página en la wiki -->
+                <article class="otro-proyecto">
+                    <a href="" target="_blank">
+                        <!-- Placeholder: reemplazar por <img src="assets/..." alt="..."> -->
+                        <div class="placeholder">Imagen del proyecto</div>
+                        <h3>Nombre del proyecto 3</h3>
+                    </a>
+                </article>
+
+            </div>
+
+            <!-- Botón a la wiki general -->
+            <a class="boton" href="https://wiki.ead.pucv.cl/Sitio_Web_IE_-_Javiera_Ruiz" target="_blank">
+                Ver la wiki
+            </a>
+        </section>
+
+    </main>
+
+    <!-- JavaScript al final del body: así las tarjetas ya existen cuando el script las busca -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
