@@ -465,3 +465,10 @@ header h1 {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Transición suave de contenido para la navegación fluida */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.25s;
+}
