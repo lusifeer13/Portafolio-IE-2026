@@ -16,14 +16,13 @@ body {
 }
 
 
-h1, h2 {
-    font-family: 'Space Mono';
+h1, h2, h3 {
+    font-family: 'Lucida Console', 'Courier New', monospace;
     color: #d30707;
 }
 
-h3{
-    font-family: 'Open Sans';
-    font-size: 1em;
+h3 {
+    font-size: 1.1em;
 }
 
 p {
@@ -40,6 +39,7 @@ header {
     align-items: flex-start;
     gap: 2em;
     padding-bottom: 2em;
+    font-family: 'Lucida Console', 'Courier New', monospace;
 }
 
 header h1 {
@@ -48,15 +48,16 @@ header h1 {
     line-height: 1;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    font-family: 'Lucida Console', 'Courier New', monospace;
 }
 
 .autora {
     display: block; /* El span es "inline": así baja a su propia línea */
     margin-top: 0.4em;
-    font-family: 'Open Sans';
-    font-size: 0.35em;
+    font-family: 'Lucida Console', 'Courier New', monospace;
+    font-size: 0.38em;
     font-weight: 400;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     color: #f0e3e3;
 }
 
@@ -77,14 +78,14 @@ header h1 {
 .indice a {
     display: inline-block;
     padding: 0.2em 0;
-    font-family: 'Space Mono';
+    font-family: 'Lucida Console', 'Courier New', monospace;
     color: #f0e3e3;
     text-decoration: none;
     transition: color 0.2s, transform 0.2s;
 }
 
 .indice a:hover {
-    color: #a588f4;
+    color: #d30707;
     transform: translateX(6px); /* Se corre un poco a la derecha */
 }
 
@@ -126,7 +127,7 @@ header h1 {
 }
 
 .logo-flotante {
-    font-family: 'Space Mono';
+    font-family: 'Lucida Console', 'Courier New', monospace;
     font-size: 1.15em;
     font-weight: 700;
     color: #f0e3e3;
@@ -139,10 +140,10 @@ header h1 {
 }
 
 .autora-flotante {
-    font-family: 'Open Sans';
-    font-size: 0.65em;
+    font-family: 'Lucida Console', 'Courier New', monospace;
+    font-size: 0.7em;
     font-weight: 400;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     color: rgba(240, 227, 227, 0.85);
     text-transform: none;
 }
@@ -158,7 +159,7 @@ header h1 {
 }
 
 .indice-flotante a {
-    font-family: 'Space Mono';
+    font-family: 'Lucida Console', 'Courier New', monospace;
     font-size: 0.88em;
     color: #f0e3e3;
     text-decoration: none;
@@ -168,7 +169,7 @@ header h1 {
 }
 
 .indice-flotante a:hover {
-    color: #a588f4;
+    color: #d30707;
     transform: translateY(-2px);
 }
 
@@ -184,13 +185,14 @@ header h1 {
 .seccion h2,
 .tarea h2,
 .pie-pagina h2 {
+    font-family: 'Lucida Console', 'Courier New', monospace;
     font-size: 2.3em;
     letter-spacing: 0.04em;
     margin-top: 0;
     margin-bottom: 0.8em;
     color: #ffffff;
     display: inline-block;
-    border-bottom: 3px solid #a588f4;
+    border-bottom: 3px solid #d30707;
     padding-bottom: 0.25em;
 }
 
@@ -284,16 +286,19 @@ header h1 {
     margin-top: 2em;
     padding: 15px 45px;
     border-radius: 50px;
-    background-color: #a588f4;
-    color: #000;
-    font-family: 'Space Mono';
+    background-color: #d30707;
+    color: #ffffff;
+    font-family: 'Lucida Console', 'Courier New', monospace;
+    font-weight: 700;
     text-decoration: none;
-    transition: background-color 0.2s, color 0.2s;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .boton:hover {
-    background-color: #000;
-    color: white;
+    background-color: #b00505;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(211, 7, 7, 0.45);
 }
 
 /* Botón de Spotify en Tarea 1 */
@@ -495,14 +500,14 @@ header h1 {
 }
 
 .volver {
-    font-family: 'Space Mono';
+    font-family: 'Lucida Console', 'Courier New', monospace;
     color: #f0e3e3; /* Mismo color claro del texto, para que se lea sobre el fondo oscuro */
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .volver:hover {
-    color: #a588f4;
+    color: #d30707;
 }
 
 .tarea-info p {
@@ -642,8 +647,8 @@ header h1 {
     background-color: rgba(165, 136, 244, 0.15);
     border: 2px solid #a588f4;
     border-radius: 40px;
-    font-family: 'Space Mono';
-    font-size: 1.25em;
+    font-family: 'Lucida Console', 'Courier New', monospace;
+    font-size: 1.15em;
     color: #ffffff;
     text-decoration: none;
     transition: all 0.25s ease;
