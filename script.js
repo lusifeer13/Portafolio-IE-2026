@@ -131,19 +131,19 @@ if (musica && botonMusica && sliderVolumen) {
 }
 
 
-// --- Cabecera móvil animada al hacer scroll ---
+// --- Cabecera flotante móvil animada al hacer scroll ---
 
-const cabecera = document.querySelector('header');
-if (cabecera) {
-    function controlarCabecera() {
-        if (window.scrollY > 80) {
-            cabecera.classList.add('compacto');
+const cabeceraFlotante = document.getElementById('cabecera-flotante');
+if (cabeceraFlotante) {
+    function controlarCabeceraFlotante() {
+        if (window.scrollY > 90) {
+            cabeceraFlotante.classList.add('visible');
         } else {
-            cabecera.classList.remove('compacto');
+            cabeceraFlotante.classList.remove('visible');
         }
     }
-    window.addEventListener('scroll', controlarCabecera, { passive: true });
-    controlarCabecera();
+    window.addEventListener('scroll', controlarCabeceraFlotante, { passive: true });
+    controlarCabeceraFlotante();
 }
 
 

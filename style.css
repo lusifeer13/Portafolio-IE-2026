@@ -33,17 +33,13 @@ p {
 }
 
 
-/* --- Encabezado: título a la izquierda, índice a la derecha --- */
+/* --- Encabezado principal: título a la izquierda, índice a la derecha --- */
 header {
     display: flex;
     justify-content: space-between; /* Empuja los dos hijos a los extremos */
     align-items: flex-start;
     gap: 2em;
     padding-bottom: 2em;
-    position: sticky;
-    top: 0;
-    z-index: 990;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 header h1 {
@@ -52,7 +48,6 @@ header h1 {
     line-height: 1;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    transition: font-size 0.35s ease;
 }
 
 .autora {
@@ -63,17 +58,11 @@ header h1 {
     font-weight: 400;
     letter-spacing: 0.2em;
     color: #f0e3e3;
-    transition: all 0.35s ease;
-}
-
-.indice {
-    transition: all 0.35s ease;
 }
 
 .indice h2 {
     margin: 0 0 0.5em;
     font-size: 1em;
-    transition: opacity 0.3s ease;
 }
 
 .indice ul {
@@ -83,7 +72,6 @@ header h1 {
     display: flex;
     flex-direction: column;
     gap: 0.2em;
-    transition: all 0.35s ease;
 }
 
 .indice a {
@@ -100,49 +88,87 @@ header h1 {
     transform: translateX(6px); /* Se corre un poco a la derecha */
 }
 
-/* --- Cabecera compacta flotante animada al hacer scroll --- */
-header.compacto {
-    align-items: center;
-    background-color: rgba(59, 56, 70, 0.94);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    margin: -2em -70px 1.5em -70px;
-    padding: 0.7em 70px;
-    border-bottom: 1px solid rgba(240, 227, 227, 0.15);
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+
+/* --- Cabecera flotante móvil: aparece con animación al bajar --- */
+.cabecera-flotante {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 995;
+    background-color: rgba(43, 33, 85, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(165, 136, 244, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, visibility 0.35s;
+    pointer-events: none;
 }
 
-header.compacto h1 {
-    font-size: 1.4em;
+.cabecera-flotante.visible {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.cabecera-flotante-contenido {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0.75em 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.logo-flotante {
+    font-family: 'Space Mono';
+    font-size: 1.15em;
+    font-weight: 700;
+    color: #f0e3e3;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     display: flex;
     align-items: baseline;
     gap: 0.5em;
 }
 
-header.compacto .autora {
-    display: inline;
-    font-size: 0.55em;
-    margin-top: 0;
-    letter-spacing: 0.1em;
-    opacity: 0.85;
+.autora-flotante {
+    font-family: 'Open Sans';
+    font-size: 0.65em;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: rgba(240, 227, 227, 0.85);
+    text-transform: none;
 }
 
-header.compacto .indice h2 {
-    display: none;
-}
-
-header.compacto .indice ul {
+.indice-flotante {
+    display: flex;
     flex-direction: row;
-    gap: 1.4em;
+    gap: 1.5em;
     align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-header.compacto .indice a {
-    padding: 0.3em 0.2em;
-    font-size: 0.85em;
+.indice-flotante a {
+    font-family: 'Space Mono';
+    font-size: 0.88em;
+    color: #f0e3e3;
+    text-decoration: none;
+    padding: 0.2em 0;
+    transition: color 0.2s, transform 0.2s;
+    display: inline-block;
 }
 
-header.compacto .indice a:hover {
+.indice-flotante a:hover {
+    color: #a588f4;
     transform: translateY(-2px);
 }
 
@@ -158,10 +184,14 @@ header.compacto .indice a:hover {
 .seccion h2,
 .tarea h2,
 .pie-pagina h2 {
-    font-size: 2.1em;
-    letter-spacing: 0.03em;
+    font-size: 2.3em;
+    letter-spacing: 0.04em;
     margin-top: 0;
     margin-bottom: 0.8em;
+    color: #ffffff;
+    display: inline-block;
+    border-bottom: 3px solid #a588f4;
+    padding-bottom: 0.25em;
 }
 
 /* Placeholder: recuadro punteado que marca dónde va una imagen */
@@ -560,31 +590,30 @@ header.compacto .indice a:hover {
         grid-template-columns: 1fr;
     }
 
-    header.compacto {
-        margin: -1em -20px 1em -20px;
+    .cabecera-flotante-contenido {
         padding: 0.6em 20px;
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5em;
+        gap: 0.4em;
     }
 
-    header.compacto .indice ul {
+    .indice-flotante {
         flex-wrap: wrap;
         gap: 0.8em;
     }
 
     .pie-pagina {
         margin: 3em -20px -1em -20px;
-        padding: 2.5em 20px;
+        padding: 3em 20px;
     }
 }
 
 /* --- Pie de página / Contacto --- */
 .pie-pagina {
-    margin: 4em -70px -2em -70px;
-    padding: 3.5em 70px 4em 70px;
-    background-color: #484358; /* Tono armónico más claro que el fondo #3b3846 */
-    border-top: 1px solid rgba(240, 227, 227, 0.2);
+    margin: 5em -70px -2em -70px;
+    padding: 4.5em 70px 5em 70px;
+    background-color: #4c3b8c; /* Franja armónica más clara que el fondo #382c6e */
+    border-top: 2px solid rgba(165, 136, 244, 0.4);
     text-align: center;
 }
 
@@ -594,31 +623,37 @@ header.compacto .indice a:hover {
 }
 
 .pie-pagina h2 {
-    margin: 0 0 0.3em;
-    color: #f0e3e3;
+    margin: 0 0 0.4em;
+    color: #ffffff;
+    border-bottom: none;
 }
 
 .pie-pagina p {
     font-family: 'Open Sans';
-    color: rgba(240, 227, 227, 0.85);
-    margin: 0 0 1.2em;
-    font-size: 1.05em;
+    color: rgba(240, 227, 227, 0.95);
+    margin: 0.5em 0 1.5em;
+    font-size: 1.15em;
     text-align: center;
 }
 
 .correo-contacto {
     display: inline-block;
+    padding: 14px 32px;
+    background-color: rgba(165, 136, 244, 0.15);
+    border: 2px solid #a588f4;
+    border-radius: 40px;
     font-family: 'Space Mono';
-    font-size: 1.2em;
-    color: #f0e3e3;
-    text-decoration: underline;
-    text-underline-offset: 6px;
-    transition: color 0.2s, transform 0.2s;
+    font-size: 1.25em;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.25s ease;
 }
 
 .correo-contacto:hover {
-    color: #a588f4;
-    transform: translateY(-2px);
+    background-color: #a588f4;
+    color: #1a1724;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(165, 136, 244, 0.4);
 }
 
 /* Transición suave de contenido para la navegación fluida */
