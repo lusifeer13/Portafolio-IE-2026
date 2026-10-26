@@ -36,12 +36,11 @@ const controlMusica = document.getElementById('control-musica');
 const sliderVolumen = document.getElementById('volumen-musica');
 const VOLUMEN_INICIAL = 0.2; // Volumen al reproducir por primera vez (0 = silencio, 1 = máximo)
 
-// localStorage y sessionStorage pueden estar bloqueados (modo privado, etc.): por eso el try/catch
 function leer(almacen, clave) {
     try { return almacen.getItem(clave); } catch (e) { return null; }
 }
 function guardar(almacen, clave, valor) {
-    try { almacen.setItem(clave, valor); } catch (e) { /* sin memoria, no pasa nada */ }
+    try { almacen.setItem(clave, valor); } catch (e) { /* sin almacenamiento local, no pasa nada */ }
 }
 
 if (musica && botonMusica && sliderVolumen) {
@@ -52,7 +51,7 @@ if (musica && botonMusica && sliderVolumen) {
     let volumenElegido = volumenGuardado >= 0 && volumenGuardado <= 1 ? volumenGuardado : VOLUMEN_INICIAL;
     sliderVolumen.value = volumenElegido;
 
-    // Sube el volumen de 0 al volumen elegido en ~2 segundos, para que no parta de golpe
+    // Sube el volumen gradualmente en ~2 segundos para un inicio suave
     function reproducirConFade() {
         clearInterval(temporizadorFade);
         musica.volume = 0;
@@ -67,7 +66,7 @@ if (musica && botonMusica && sliderVolumen) {
         });
     }
 
-    // Cambia el botón según el estado real del audio
+    // Cambia el estado visual y de accesibilidad del botón según el audio
     function actualizarBoton() {
         const sonando = !musica.paused;
         botonMusica.classList.toggle('sonando', sonando);
@@ -77,7 +76,7 @@ if (musica && botonMusica && sliderVolumen) {
     musica.addEventListener('play', actualizarBoton);
     musica.addEventListener('pause', actualizarBoton);
 
-    // Retoma desde donde iba si la persona recargó o vino de otra página
+    // Retoma desde donde iba si la persona recargó la página
     const tiempoGuardado = parseFloat(leer(sessionStorage, 'musica-tiempo'));
     if (tiempoGuardado > 0) {
         if (musica.readyState >= 1) {
@@ -92,7 +91,7 @@ if (musica && botonMusica && sliderVolumen) {
         guardar(sessionStorage, 'musica-tiempo', musica.currentTime);
     });
 
-    // Primer clic, toque o tecla en cualquier parte: empieza la música
+    // Primer clic, toque o tecla en cualquier parte de la página: inicia la música
     function dejarDeEscuchar() {
         document.removeEventListener('pointerdown', alPrimerGesto);
         document.removeEventListener('keydown', alPrimerGesto);
@@ -132,87 +131,119 @@ if (musica && botonMusica && sliderVolumen) {
 }
 
 
-// --- Navegación fluida (SPA): la música NUNCA se corta al entrar o salir de las tareas ---
+// --- Cabecera móvil animada al hacer scroll ---
 
-function esIndex(urlStr) {
-    try {
-        const u = new URL(urlStr, window.location.href);
-        const path = u.pathname.toLowerCase();
-        return path.endsWith('index.html') || path.endsWith('/') || !path.includes('/tareas/');
-    } catch (e) {
-        return false;
+const cabecera = document.querySelector('header');
+if (cabecera) {
+    function controlarCabecera() {
+        if (window.scrollY > 80) {
+            cabecera.classList.add('compacto');
+        } else {
+            cabecera.classList.remove('compacto');
+        }
     }
+    window.addEventListener('scroll', controlarCabecera, { passive: true });
+    controlarCabecera();
 }
 
-async function cargarPagina(urlStr, empujarHistorial = true, hash = '') {
-    try {
-        const respuesta = await fetch(urlStr);
-        if (!respuesta.ok) throw new Error('Error al cargar página');
-        const html = await respuesta.text();
 
-        const parser = new DOMParser();
-        const docNuevo = parser.parseFromString(html, 'text/html');
-        const nuevoMain = docNuevo.querySelector('main');
-        const mainActual = document.querySelector('main');
+// --- Navegación fluida instantánea: la música NUNCA se corta al entrar o salir de las tareas ---
 
-        if (!nuevoMain || !mainActual) {
-            window.location.href = urlStr;
-            return;
+let contenidoGaleriaOriginal = null;
+let tituloOriginal = document.title;
+
+function obtenerContenidoGaleria() {
+    const main = document.querySelector('main');
+    if (!contenidoGaleriaOriginal && main && !main.classList.contains('tarea')) {
+        contenidoGaleriaOriginal = main.innerHTML;
+        tituloOriginal = document.title;
+    }
+    return contenidoGaleriaOriginal;
+}
+
+obtenerContenidoGaleria();
+
+// Muestra una tarea al instante usando plantillas sin recargar la página ni cortar la música
+function mostrarTareaPorPlantilla(numeroTarea, empujarHistorial = true) {
+    const plantilla = document.getElementById('plantilla-tarea-' + numeroTarea);
+    const mainActual = document.querySelector('main');
+    if (!plantilla || !mainActual) return false;
+
+    obtenerContenidoGaleria();
+
+    function aplicar() {
+        mainActual.className = plantilla.getAttribute('data-clase') || 'tarea';
+        mainActual.innerHTML = plantilla.innerHTML;
+        document.title = plantilla.getAttribute('data-titulo') || ('Tarea ' + numeroTarea + ' | Portafolio Luciana Valdés');
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    if (document.startViewTransition) {
+        document.startViewTransition(aplicar);
+    } else {
+        aplicar();
+    }
+
+    if (empujarHistorial) {
+        try {
+            if (window.location.protocol === 'file:') {
+                window.history.pushState({ tarea: numeroTarea }, '', '#tarea-' + numeroTarea);
+            } else {
+                window.history.pushState({ tarea: numeroTarea }, '', 'tareas/tarea' + numeroTarea + '.html');
+            }
+        } catch (e) {
+            window.history.pushState({ tarea: numeroTarea }, '', '#tarea-' + numeroTarea);
         }
+    }
+    return true;
+}
 
-        const estabaEnIndex = esIndex(window.location.href);
-        const vaAIndex = esIndex(urlStr);
+// Vuelve a la galería principal de forma fluida
+function volverAGaleria(empujarHistorial = true, anclaDestino = '#proyectos') {
+    const mainActual = document.querySelector('main');
+    if (!mainActual) return;
 
-        function aplicarCambios() {
-            // Reemplaza únicamente el contenido del <main>, manteniendo la música intacta
-            mainActual.className = nuevoMain.className;
-            mainActual.innerHTML = nuevoMain.innerHTML;
+    const galeriaHtml = obtenerContenidoGaleria();
+    if (!galeriaHtml) return;
 
-            if (docNuevo.title) {
-                document.title = docNuevo.title;
-            }
+    function aplicar() {
+        mainActual.className = '';
+        mainActual.innerHTML = galeriaHtml;
+        document.title = tituloOriginal;
+        inicializarTarjetas();
 
-            // Si volvimos a la galería principal, reactiva los giros 3D de las tarjetas
-            if (vaAIndex) {
-                inicializarTarjetas();
-            }
-
-            // Desplazamiento suave al lugar correcto
-            if (hash) {
-                const destino = document.querySelector(hash);
-                if (destino) {
-                    destino.scrollIntoView({ behavior: 'smooth' });
-                }
-            } else if (vaAIndex && !estabaEnIndex) {
-                // Al volver de una tarea, se desplaza suavemente a la sección de proyectos
-                const secProyectos = document.getElementById('proyectos');
-                if (secProyectos) {
-                    secProyectos.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-                }
+        if (anclaDestino) {
+            const dest = document.querySelector(anclaDestino);
+            if (dest) {
+                dest.scrollIntoView({ behavior: 'smooth' });
             } else {
                 window.scrollTo({ top: 0, behavior: 'instant' });
             }
-        }
-
-        // View Transitions API para navegadores modernos (efecto de transición suave)
-        if (document.startViewTransition) {
-            document.startViewTransition(aplicarCambios);
         } else {
-            aplicarCambios();
+            window.scrollTo({ top: 0, behavior: 'instant' });
         }
+    }
 
-        if (empujarHistorial) {
-            window.history.pushState({ url: urlStr }, '', urlStr);
+    if (document.startViewTransition) {
+        document.startViewTransition(aplicar);
+    } else {
+        aplicar();
+    }
+
+    if (empujarHistorial) {
+        try {
+            if (window.location.protocol === 'file:') {
+                window.history.pushState({ tarea: 0 }, '', window.location.pathname);
+            } else {
+                window.history.pushState({ tarea: 0 }, '', 'index.html' + (anclaDestino || ''));
+            }
+        } catch (e) {
+            window.history.pushState({ tarea: 0 }, '', window.location.pathname);
         }
-    } catch (err) {
-        // En caso de error o modo local file://, navega de forma estándar
-        window.location.href = urlStr;
     }
 }
 
-// Interceptar clics en enlaces internos para navegar sin recargar la página
+// Interceptar clics para navegación fluida
 document.addEventListener('click', function (evento) {
     if (evento.defaultPrevented || evento.button !== 0 || evento.metaKey || evento.ctrlKey || evento.shiftKey || evento.altKey) {
         return;
@@ -221,44 +252,67 @@ document.addEventListener('click', function (evento) {
     const enlace = evento.target.closest('a');
     if (!enlace) return;
 
-    // Enlaces externos o que abran en nueva pestaña
-    if (enlace.target === '_blank' || enlace.origin !== window.location.origin) {
+    // Enlaces externos o que abran en otra pestaña (Spotify, wikis, etc.)
+    if (enlace.target === '_blank' || (enlace.origin && enlace.origin !== window.location.origin)) {
         return;
     }
 
-    // Si se abrió localmente con file://, navegamos de forma estándar
-    if (window.location.protocol === 'file:') {
-        return;
-    }
+    const href = enlace.getAttribute('href');
+    if (!href) return;
 
-    const urlDestino = new URL(enlace.href);
-    const hash = urlDestino.hash;
-
-    // Si es un enlace a una sección con ancla (#sobre-mi, #proyectos, etc.)
-    if (hash) {
-        const elemento = document.querySelector(hash);
-        if (elemento && urlDestino.pathname === window.location.pathname) {
-            // El elemento está en la pantalla actual: desplazamiento suave inmediato
+    // 1. Clic en "← Volver a proyectos"
+    if (enlace.classList.contains('volver') || href === '../index.html' || href === 'index.html') {
+        const main = document.querySelector('main');
+        if (main && main.classList.contains('tarea')) {
             evento.preventDefault();
-            elemento.scrollIntoView({ behavior: 'smooth' });
-            window.history.pushState(null, '', hash);
-            return;
-        } else {
-            // El elemento no está en la pantalla actual (ej: estamos en una tarea y vamos a #sobre-mi)
-            evento.preventDefault();
-            const urlIndex = esIndex(enlace.href) ? enlace.href : new URL('../index.html', window.location.href).href;
-            cargarPagina(urlIndex, true, hash);
+            volverAGaleria(true, '#proyectos');
             return;
         }
     }
 
-    // Navegación dinámica entre inicio y tareas
-    evento.preventDefault();
-    cargarPagina(enlace.href, true, hash);
+    // 2. Clic en una tarjeta de la galería (ej: tareas/tarea1.html o #tarea-1)
+    const matchTarea = href.match(/tarea(\d)\.html/i) || href.match(/#tarea-(\d)/i);
+    if (matchTarea) {
+        const num = matchTarea[1];
+        if (mostrarTareaPorPlantilla(num, true)) {
+            evento.preventDefault();
+            return;
+        }
+    }
+
+    // 3. Clic en un enlace del índice (#sobre-mi, #imagen-escrita, #proyectos, #otros-proyectos, #contacto)
+    const hash = enlace.hash || (href.startsWith('#') ? href : (href.includes('#') ? '#' + href.split('#')[1] : ''));
+    if (hash) {
+        const main = document.querySelector('main');
+        // Si estamos dentro de una tarea y queremos ir a una sección del inicio
+        if (main && main.classList.contains('tarea')) {
+            evento.preventDefault();
+            volverAGaleria(true, hash);
+            return;
+        }
+
+        // Si ya estamos en la galería principal
+        const elemento = document.querySelector(hash);
+        if (elemento) {
+            evento.preventDefault();
+            elemento.scrollIntoView({ behavior: 'smooth' });
+            try { window.history.pushState(null, '', hash); } catch (e) {}
+            return;
+        }
+    }
 });
 
-// Manejar botones atrás y adelante del navegador sin cortar la música
-window.addEventListener('popstate', function () {
-    if (window.location.protocol === 'file:') return;
-    cargarPagina(window.location.href, false, window.location.hash);
+// Botones Atrás / Adelante del navegador
+window.addEventListener('popstate', function (e) {
+    if (e.state && e.state.tarea) {
+        mostrarTareaPorPlantilla(e.state.tarea, false);
+    } else {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#tarea-')) {
+            const num = hash.replace('#tarea-', '');
+            mostrarTareaPorPlantilla(num, false);
+        } else {
+            volverAGaleria(false, hash || '#proyectos');
+        }
+    }
 });

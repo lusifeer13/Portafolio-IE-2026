@@ -40,6 +40,10 @@ header {
     align-items: flex-start;
     gap: 2em;
     padding-bottom: 2em;
+    position: sticky;
+    top: 0;
+    z-index: 990;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 header h1 {
@@ -48,6 +52,7 @@ header h1 {
     line-height: 1;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    transition: font-size 0.35s ease;
 }
 
 .autora {
@@ -58,17 +63,27 @@ header h1 {
     font-weight: 400;
     letter-spacing: 0.2em;
     color: #f0e3e3;
+    transition: all 0.35s ease;
+}
+
+.indice {
+    transition: all 0.35s ease;
 }
 
 .indice h2 {
     margin: 0 0 0.5em;
     font-size: 1em;
+    transition: opacity 0.3s ease;
 }
 
 .indice ul {
     list-style: none; /* Quita los puntos de la lista */
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    transition: all 0.35s ease;
 }
 
 .indice a {
@@ -85,12 +100,68 @@ header h1 {
     transform: translateX(6px); /* Se corre un poco a la derecha */
 }
 
+/* --- Cabecera compacta flotante animada al hacer scroll --- */
+header.compacto {
+    align-items: center;
+    background-color: rgba(59, 56, 70, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    margin: -2em -70px 1.5em -70px;
+    padding: 0.7em 70px;
+    border-bottom: 1px solid rgba(240, 227, 227, 0.15);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+}
+
+header.compacto h1 {
+    font-size: 1.4em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+}
+
+header.compacto .autora {
+    display: inline;
+    font-size: 0.55em;
+    margin-top: 0;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+}
+
+header.compacto .indice h2 {
+    display: none;
+}
+
+header.compacto .indice ul {
+    flex-direction: row;
+    gap: 1.4em;
+    align-items: center;
+}
+
+header.compacto .indice a {
+    padding: 0.3em 0.2em;
+    font-size: 0.85em;
+}
+
+header.compacto .indice a:hover {
+    transform: translateY(-2px);
+}
+
 
 /* --- Secciones --- */
 .seccion {
-    padding: 2em 0;
+    padding: 2.5em 0;
     border-top: 1px solid rgba(240, 227, 227, 0.2); /* Línea suave que separa secciones */
-    scroll-margin-top: 1em; /* Deja aire arriba al llegar desde el índice */
+    scroll-margin-top: 5em; /* Deja aire arriba para no chocar con la cabecera compacta */
+}
+
+/* Títulos de cada apartado / sección con mayor tamaño y presencia */
+.seccion h2,
+.tarea h2,
+.pie-pagina h2 {
+    font-size: 2.1em;
+    letter-spacing: 0.03em;
+    margin-top: 0;
+    margin-bottom: 0.8em;
 }
 
 /* Placeholder: recuadro punteado que marca dónde va una imagen */
@@ -193,6 +264,30 @@ header h1 {
 .boton:hover {
     background-color: #000;
     color: white;
+}
+
+/* Botón de Spotify en Tarea 1 */
+.boton-spotify {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.4em;
+    padding: 12px 30px;
+    background-color: #1DB954;
+    color: #000;
+    font-weight: 700;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.boton-spotify svg {
+    flex-shrink: 0;
+}
+
+.boton-spotify:hover {
+    background-color: #1ed760;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
 }
 
 /* --- Tarjetas Individuales (cartas que se dan vuelta) --- */
@@ -464,8 +559,67 @@ header h1 {
     .tarea {
         grid-template-columns: 1fr;
     }
+
+    header.compacto {
+        margin: -1em -20px 1em -20px;
+        padding: 0.6em 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5em;
+    }
+
+    header.compacto .indice ul {
+        flex-wrap: wrap;
+        gap: 0.8em;
+    }
+
+    .pie-pagina {
+        margin: 3em -20px -1em -20px;
+        padding: 2.5em 20px;
+    }
 }
 
+/* --- Pie de página / Contacto --- */
+.pie-pagina {
+    margin: 4em -70px -2em -70px;
+    padding: 3.5em 70px 4em 70px;
+    background-color: #484358; /* Tono armónico más claro que el fondo #3b3846 */
+    border-top: 1px solid rgba(240, 227, 227, 0.2);
+    text-align: center;
+}
+
+.pie-pagina .contacto-contenido {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.pie-pagina h2 {
+    margin: 0 0 0.3em;
+    color: #f0e3e3;
+}
+
+.pie-pagina p {
+    font-family: 'Open Sans';
+    color: rgba(240, 227, 227, 0.85);
+    margin: 0 0 1.2em;
+    font-size: 1.05em;
+    text-align: center;
+}
+
+.correo-contacto {
+    display: inline-block;
+    font-family: 'Space Mono';
+    font-size: 1.2em;
+    color: #f0e3e3;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.correo-contacto:hover {
+    color: #a588f4;
+    transform: translateY(-2px);
+}
 
 /* Transición suave de contenido para la navegación fluida */
 ::view-transition-old(root),
